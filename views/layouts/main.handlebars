@@ -10,10 +10,8 @@
         <h1>Tech Blog</h1>
         <div id="header-buttons">
             <a href="/home">Home</a>
-            {{#if logged_in}}
             <a href="/dashboard">Dashboard</a>
-            {{/if}}
-            {{#if logged_in}}
+            {{#if loggedIn}}
             <button id="logout">Logout</button>
             {{else}}
             <a id="login" href="/login">Login</a>
@@ -25,5 +23,5 @@
     </main>
     
 </body>
-
+<script src="/javascript/logout.js"></script>
 </html>
