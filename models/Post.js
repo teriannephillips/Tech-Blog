@@ -21,7 +21,7 @@ Post.init({
             len: [1]
         }
     },
-    post_text: {
+    post: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -31,7 +31,7 @@ Post.init({
     user_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'user',
+            model: 'users',
             key: 'id'
         }
     }

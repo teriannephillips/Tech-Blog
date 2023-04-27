@@ -3,18 +3,20 @@
 
 <head>
     <title>Tech Blog</title>
-
+<link rel="stylesheet" href="/css/main.css">
 <body>
     <!-- header -->
     <header id="header-background">
         <h1>Tech Blog</h1>
         <div id="header-buttons">
-            <a href="/home">Home</a>
-            <a href="/dashboard">Dashboard</a>
+            <button><a href="/home">Home</a></button>
+            {{#if loggedIn}}
+            <button><a href="/dashboard">Dashboard</a></button>
+            {{/if}}
             {{#if loggedIn}}
             <button id="logout">Logout</button>
             {{else}}
-            <a id="login" href="/login">Login</a>
+            <button><a id="login" href="/login">Login</a></button>
             {{/if}}
     </header>
 
@@ -23,5 +25,7 @@
     </main>
     
 </body>
+{{#if loggedIn}}
 <script src="/javascript/logout.js"></script>
+{{/if}}
 </html>
