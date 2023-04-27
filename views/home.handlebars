@@ -1,1 +1,10 @@
-<h1>home</h1>
+<h1 class = "heading">Home</h1>
+<ul class="list">
+    {{#each posts}}
+    <section class = "post-section">
+    <h2 class = "post-title">{{title}}</h2>
+    <h3>by {{user.username}} at {{created_at}}</h3>
+    <p class = "post-text">{{post}}</p>
+    </section>
+    {{/each}}
+</ul>

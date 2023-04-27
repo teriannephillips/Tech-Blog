@@ -18,6 +18,7 @@ header {
 }
 body {
     background-color: darkgray;
+    color:white;
 }
 h1 {
     font-size: 20px;
@@ -41,11 +42,11 @@ button {
     border-radius: 5%;
 }
 .login-form, .signup-form {
-    width: 300px;
+    width: 50%;
     margin: 0 auto;
   }
-  .post-form {
-    width: 500px;
+  .post-form, .list {
+    width:80%;
     margin: 0 auto;
   }
   
@@ -67,3 +68,14 @@ button {
   .login-link, .signup-link {
     padding: 2%;
   }
+.post-title {
+ padding: 1%;
+ background-color: black;
+}
+.post-text {
+   background-color: cadetblue;
+   padding:2%;
+}
+.post-section {
+    margin:2%;
+}

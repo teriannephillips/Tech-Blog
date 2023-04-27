@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const {Post, User, Comment} = require(`../models`);
 router.get('/', (req, res) => {
 
             res.render('home', {
@@ -7,9 +7,56 @@ router.get('/', (req, res) => {
             });
 
 });
-router.get('/home', (req,res) => {
-    res.redirect('/');
-})
+router.get('/home', async (req,res) => {
+    try {
+        const postsData = await Post.findAll(
+            {
+                attributes: ["id", "post", "title", "created_at"],
+                order: [
+                    ["created_at", "DESC"]
+                ],
+                include: [{
+                        model: User,
+                        attributes: ["username"],
+                    },
+                    {
+                        model: Comment,
+                        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+                        include: {
+                            model: User,
+                            attributes: ["username"],
+                        },
+                    },
+                ],
+            }
+        );
+        const posts= postsData.map((post) => post.get({ plain: true }));
+        console.log(posts);
+    res.render('home', {
+    posts,
+    });
+
+}catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+}
+});
+
+// // GET all cars data and render the home page
+// router.get('/home', async (req, res) => {
+//     try {
+//       const carsData = await Car.findAll();
+//       const cars = carsData.map((car) => car.get({ plain: true }));
+//       res.render('home', {
+//         cars,
+//         logged_in: req.session.logged_in,
+//         customer_email: req.session.email
+//       });
+//     } catch (err) {
+//       console.log(err);
+//       res.status(500).json(err);
+//     }
+//   });
 
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
