@@ -1,4 +1,17 @@
-<section class="new-post">
-    <button type="submit" id="new-post">New post</button>
-</section>
+<h1 class="heading">Dashboard</h1>
+
+
+<ul class="list">
+    <section class="new-post">
+        <button type="submit" id="new-post">New post</button>
+    </section>
+    {{#each posts}}
+    <section class="post-section">
+        <h2 class="post-title">{{title}}</h2>
+        <h3>by {{user.username}} at {{created_at}}</h3>
+        <p class="post-text">{{post}}</p>
+    </section>
+    {{/each}}
+</ul>
+
 <script src="/javascript/new-post.js"></script>

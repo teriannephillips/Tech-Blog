@@ -79,3 +79,8 @@ button {
 .post-section {
     margin:2%;
 }
+new-post {
+  align-self: center;
+  width:50%;
+  margin: 0 auto;
+}

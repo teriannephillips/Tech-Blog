@@ -1,13 +1,14 @@
 const router = require('express').Router();
-const {Post, User, Comment} = require(`../models`);
-router.get('/', (req, res) => {
+const { Post, User, Comment } = require(`../models`);
+const withAuth = require('../utils/auth');
+router.get('/home', (req, res) => {
 
-            res.render('home', {
-                loggedIn: req.session.loggedIn
-            });
+    res.redirect('/', {
+        loggedIn: req.session.loggedIn
+    });
 
 });
-router.get('/home', async (req,res) => {
+router.get('/', async (req, res) => {
     try {
         const postsData = await Post.findAll(
             {
@@ -16,51 +17,36 @@ router.get('/home', async (req,res) => {
                     ["created_at", "DESC"]
                 ],
                 include: [{
+                    model: User,
+                    attributes: ["username"],
+                },
+                {
+                    model: Comment,
+                    attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+                    include: {
                         model: User,
                         attributes: ["username"],
                     },
-                    {
-                        model: Comment,
-                        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
-                        include: {
-                            model: User,
-                            attributes: ["username"],
-                        },
-                    },
+                },
                 ],
             }
         );
-        const posts= postsData.map((post) => post.get({ plain: true }));
+        const posts = postsData.map((post) => post.get({ plain: true }));
         console.log(posts);
-    res.render('home', {
-    posts,
-    });
+        res.render('home', {
+            posts,
+            loggedIn: req.session.loggedIn
+        });
 
-}catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-}
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 });
-
-// // GET all cars data and render the home page
-// router.get('/home', async (req, res) => {
-//     try {
-//       const carsData = await Car.findAll();
-//       const cars = carsData.map((car) => car.get({ plain: true }));
-//       res.render('home', {
-//         cars,
-//         logged_in: req.session.logged_in,
-//         customer_email: req.session.email
-//       });
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).json(err);
-//     }
-//   });
 
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
-        res.redirect('/');
+        res.redirect('/dashboard');
         return;
     }
 
@@ -76,9 +62,45 @@ router.get('/signup', (req, res) => {
 
     res.render('signup');
 });
-router.get('/dashboard', (req, res) => {
-    res.render('dashboard');
-});
+
+    router.get('/dashboard', async (req, res) => {
+        try {
+            const postsData = await Post.findAll(
+                {
+                where: {
+                    user_id: req.session.user_id
+                },
+                    attributes: ["id", "post", "title", "created_at"],
+                    order: [
+                        ["created_at", "DESC"]
+                    ],
+                    include: [{
+                        model: User,
+                        attributes: ["username"],
+                    },
+                    {
+                        model: Comment,
+                        attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
+                        include: {
+                            model: User,
+                            attributes: ["username"],
+                        },
+                    },
+                    ],
+                }
+            );
+            const posts = postsData.map((post) => post.get({ plain: true }));
+            console.log(posts);
+            res.render('dashboard', {
+                posts,
+                loggedIn: req.session.loggedIn
+            });
+    
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    });
 router.get('/dashboard/new', (req, res) => {
     res.render('new-post');
 });
