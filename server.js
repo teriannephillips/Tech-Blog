@@ -6,6 +6,7 @@ const path = require("path")
 const exphbs = require("express-handlebars")
 const hbs = exphbs.create()
 const app = express()
+const routes = require('./controllers');
 const sess = {
   secret: 'Super secret secret',
   cookie: {
@@ -29,6 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static("images"));
 app.use(require("./controllers/"));
+app.use(routes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
