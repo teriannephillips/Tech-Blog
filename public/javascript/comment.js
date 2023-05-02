@@ -21,11 +21,12 @@ async function commentFormHandler(event) {
         });
 
         if (response.ok) {
-            document.location.reload();
+           document.location.reload();
         } else {
-            alert(response.statusText);
+             alert("You must be logged in to comment!");
+            document.location.replace('/login')
         }
-    }
+ }
 }
 
 document.querySelector('.comment-form').addEventListener('submit', commentFormHandler);
