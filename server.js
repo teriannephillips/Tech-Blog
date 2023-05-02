@@ -31,7 +31,13 @@ app.use(express.static("images"));
 app.use(require("./controllers"));
 
 const PORT = process.env.PORT || 3001;
-// Connect to the database before starting the Express.js server
-sequelize.sync().then(() => {
-  app.listen(PORT, () => console.log('Now listening'));
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}!`);
+  sequelize.sync({ force: false });
 });
+
+
+// Connect to the database before starting the Express.js server
+// sequelize.sync().then(() => {
+//   app.listen(PORT, () => console.log('Now listening'));
+// });
