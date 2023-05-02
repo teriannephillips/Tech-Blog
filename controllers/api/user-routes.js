@@ -3,7 +3,7 @@ const {
     User,
     Post,
     Comment
-} = require('../../models');
+} = require('../../models/');
 
 // Get all users
 router.get('/', (req, res) => {
