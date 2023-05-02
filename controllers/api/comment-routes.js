@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 });
 
 //Create a comment
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
     console.log(req.session)
     if (req.session) {
         Comment.create({
@@ -31,6 +31,8 @@ router.post('/', (req, res) => {
             });
     }
 });
+
+
 
 
 module.exports = router;
