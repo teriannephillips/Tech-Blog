@@ -5,6 +5,7 @@
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+      box-sizing: border-box;
 }
 
 html {
@@ -15,6 +16,7 @@ header {
     background-color: cadetblue;
     color: white;
     padding:1%;
+    width:100%;
 }
 body {
     background-color: darkgray;
@@ -28,6 +30,7 @@ h1 {
     background-color: black;
     color:white;
     margin-bottom:2%;
+    width:100%;
 }
 
 a {
@@ -102,4 +105,33 @@ new-post {
   align-self: center;
   width:50%;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    width:100%;
+    display:flex;
+  }
+  body {
+    font-size:22pt;
+    width:100%;
+  }
+  header {
+    width:100%;
+  }
+  h1 {
+    font-size:25pt;
+  }
+  .login-form, .signup-form {
+    width: 80%;
+  }
+  .post-form, .list {
+    width:100%;
+  }
+
+}
+@media screen and (max-width: 560px) {
+  img {
+    width:300px;
+  }
 }

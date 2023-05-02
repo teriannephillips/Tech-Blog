@@ -16,9 +16,9 @@ router.get("/", (req, res) => {
 });
 
 //Create a comment
-router.post('/', withAuth, (req, res) => {
+router.post('/', (req, res) => {
     console.log(req.session)
-    if (req.session) {
+    if (req.session.loggedIn) {
         Comment.create({
                 comment_text: req.body.comment,
                 post_id: req.body.postId,
@@ -29,6 +29,9 @@ router.post('/', withAuth, (req, res) => {
                 console.log(err);
                 res.status(400).json(err);
             });
+    }
+    else {
+        res.status(401).json(err);
     }
 });
 
