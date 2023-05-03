@@ -1,5 +1,8 @@
 const router = require('express').Router();
-const { Post, User, Comment } = require('../../models');
+const rootPath = process.cwd();
+const path = require("path")
+const { Post, User, Comment } = require(path.join(rootPath, "models"));
+
 
 const withAuth = require('../../utils/auth');
 
